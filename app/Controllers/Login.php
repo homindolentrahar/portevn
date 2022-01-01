@@ -17,7 +17,7 @@ class Login extends BaseController
     public function index()
     {
         helper(['form']);
-        $isLoggedIn = session()->get('isLoggedIn');
+        $isLoggedIn = session()->get('logged_in');
         $data = [
             'title' => "Login",
             'isLoggedIn' => $isLoggedIn,

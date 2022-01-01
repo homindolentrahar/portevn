@@ -17,6 +17,20 @@
     <div class="w-full h-screen p-8">
         <?= $this->renderSection("content") ?>
     </div>
+
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#image')
+            const imagePreview = document.querySelector(".img-preview")
+
+            const fileCover = new FileReader()
+            fileCover.readAsDataURL(image.files[0])
+
+            fileCover.onload = function(e) {
+                imagePreview.src = e.target.result
+            }
+        }
+    </script>
 </body>
 
 </html>

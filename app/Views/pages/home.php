@@ -1,36 +1,48 @@
 <?= $this->extend('layout/template') ?>
 
 <?= $this->section("content") ?>
-<div class="w-full h-full flex flex-col gap-8 justify-start items-center">
+<div class="w-full h-full flex flex-col gap-10 justify-start items-center">
+    <?php if (session()->get('logged_in')) : ?>
+        <div class="w-4/5 grid grid-cols-2 gap-6 rounded-xl bg-white border-2 border-stone-100">
+            <div class="flex flex-col gap-4 p-10">
+                <h1 class="text-stone-800 text-3xl font-extrabold">Create your own event!</h1>
+                <p class="text-stone-400 text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ipsa esse rem corporis nisi voluptatem asperiores eos quaerat animi voluptate quas modi, sint dicta unde praesentium totam dolor aspernatur vitae.</p>
+            </div>
+            <div class="w-full h-full bg-blue-600 rounded-tr-xl rounded-br-xl grid place-content-center">
+                <a href="/create" class="bg-white rounded-md px-9 py-4 text-blue-600 font-extrabold hover:bg-blue-50">Create Event</a>
+            </div>
+        </div>
+    <?php endif ?>
     <div class="w-full grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 place-items-center gap-4">
         <?php foreach ($categories as $category) : ?>
             <div class="bg-blue-50 text-blue-600 text-sm font-bold px-5 py-3 rounded-md cursor-pointer hover:bg-blue-100"><?= $category['name'] ?></div>
         <?php endforeach; ?>
     </div>
     <div class="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-6">
-        <div class="flex flex-col rounded-md shadow cursor-pointer hover:shadow-md">
-            <div class="relative">
-                <div class="absolute w-full">
-                    <div class="flex flex-row justify-between m-5">
-                        <p class="text-white text-sm font-bold">Semarang</p>
-                        <div class="flex flex-col items-center gap-0">
-                            <p class="text-blue-50 text-sm font-medium">January</p>
-                            <p class="text-white text-base font-extrabold">12</p>
+        <?php foreach ($events as $event) : ?>
+            <a href="/update" class="flex flex-col rounded-md shadow cursor-pointer hover:shadow-md">
+                <div class="relative">
+                    <div class="absolute w-full">
+                        <div class="flex flex-row justify-between m-5">
+                            <p class="text-white text-sm font-bold"><?= $event['location'] ?></p>
+                            <div class="flex flex-col items-center gap-0">
+                                <p class="text-blue-50 text-sm font-medium"><?= $event['event_time'] ?></p>
+                                <p class="text-white text-base font-extrabold"><?= $event['event_time'] ?></p>
+                            </div>
                         </div>
                     </div>
+                    <div class="bg-blue-800 w-full h-80 rounded-tl-md rounded-tr-md"></div>
                 </div>
-                <img v-if="event.image_url" :src="event.image_url" :alt="event.id" />
-                <div class="bg-blue-800 w-full h-80 rounded-tl-md rounded-tr-md"></div>
-            </div>
-            <div class="flex flex-col justify-start gap-y-4 p-6">
-                <div class="flex flex-col justify-center items-start gap-y-1">
-                    <h1 class="text-black text-xl font-bold">Event title</h1>
-                    <p class="text-slate-400 text-sm">Event description</p>
+                <div class="flex flex-col justify-start gap-y-4 p-6">
+                    <div class="flex flex-col justify-center items-start gap-y-1">
+                        <h1 class="text-black text-xl font-bold"><?= $event['title'] ?></h1>
+                        <p class="text-slate-400 text-sm"><?= $event['description'] ?></p>
+                    </div>
+                    <h3 class="text-slate-400 text-sm font-bold"><?= $event['category_id'] ?></h3>
+                    <h2 class="text-black font-extrabold self-end">Rp. <?= $event['price'] ?></h2>
                 </div>
-                <h3 class="text-slate-400 text-sm font-bold">Music</h3>
-                <h2 class="text-black font-extrabold self-end">Rp. 45000</h2>
-            </div>
-        </div>
+            </a>
+        <?php endforeach ?>
     </div>
 </div>
 <?= $this->endSection() ?>
