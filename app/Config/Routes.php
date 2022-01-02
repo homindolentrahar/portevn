@@ -31,8 +31,12 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-
+// $routes->get('/', 'Home::index');
+// $routes->resource('events');
+$routes->get('/', 'Events::index');
+$routes->get('events/detail/(:any)', 'Events::show/$1');
+$routes->get('events/create', 'Events::create');
+$routes->get('events/edit/(:any)', 'Events::edit/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

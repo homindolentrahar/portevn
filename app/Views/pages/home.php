@@ -20,26 +20,30 @@
     </div>
     <div class="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-6">
         <?php foreach ($events as $event) : ?>
-            <a href="/update" class="flex flex-col rounded-md shadow cursor-pointer hover:shadow-md">
+            <a href="/events/detail/<?= $event['event_id'] ?>" class="flex flex-col rounded-md shadow cursor-pointer hover:shadow-md">
                 <div class="relative">
                     <div class="absolute w-full">
                         <div class="flex flex-row justify-between m-5">
-                            <p class="text-white text-sm font-bold"><?= $event['location'] ?></p>
-                            <div class="flex flex-col items-center gap-0">
+                            <p class="h-min text-white text-xs font-bold px-4 py-2 bg-stone-900 bg-opacity-75 rounded-md"><?= $event['location'] ?></p>
+                            <div class="h-min flex flex-col items-center gap-0">
                                 <p class="text-blue-50 text-sm font-medium"><?= $event['event_time'] ?></p>
                                 <p class="text-white text-base font-extrabold"><?= $event['event_time'] ?></p>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-blue-800 w-full h-80 rounded-tl-md rounded-tr-md"></div>
+                    <?php if ($event['image_url']) { ?>
+                        <img src="/img/<?= $event['image_url'] ?>" alt="<?= $event['image_url'] ?>" class="w-full h-80 rounded-tl-md rounded-tr-md">
+                    <?php } else {  ?>
+                        <div class="bg-blue-800 w-full h-80 rounded-tl-md rounded-tr-md"></div>
+                    <?php } ?>
                 </div>
                 <div class="flex flex-col justify-start gap-y-4 p-6">
                     <div class="flex flex-col justify-center items-start gap-y-1">
                         <h1 class="text-black text-xl font-bold"><?= $event['title'] ?></h1>
                         <p class="text-slate-400 text-sm"><?= $event['description'] ?></p>
                     </div>
-                    <h3 class="text-slate-400 text-sm font-bold"><?= $event['category_id'] ?></h3>
-                    <h2 class="text-black font-extrabold self-end">Rp. <?= $event['price'] ?></h2>
+                    <h3 class="text-slate-400 text-sm font-bold"><?= $event['name'] ?></h3>
+                    <h2 class="text-black font-extrabold self-end">Rp.<?= $event['price'] ?></h2>
                 </div>
             </a>
         <?php endforeach ?>
