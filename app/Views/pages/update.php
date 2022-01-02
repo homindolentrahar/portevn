@@ -3,11 +3,14 @@
 <?= $this->section("content") ?>
 <?php $data = $event[0] ?>
 <form method="POST" action="/events/update/<?= $data['event_id'] ?>" enctype="multipart/form-data" class="w-full h-full flex flex-col">
+  <?php if (session()->getFlashdata('error')) : ?>
+    <div class="w-full text-center px-6 py-3 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
+  <?php endif ?>
   <input type="hidden" name="event_id" value="<?= $data['event_id'] ?>">
   <input type="hidden" name="previous_image" value="<?= $data['image_url'] ?>">
   <div class="flex gap-4 justify-between">
     <h1 class="text-stone-900 text-base font-bold mb-6">Update Event Form</h1>
-    <a href="/delete" class="h-min px-5 py-2 rounded-md bg-red-50 text-red-600 text-sm font-bold hover:bg-red-100">Delete</a>
+    <a href="/events/delete/<?= $data['event_id'] ?>" class="h-min px-5 py-2 rounded-md bg-red-50 text-red-600 text-sm font-bold hover:bg-red-100">Delete</a>
   </div>
   <div class="grid grid-cols-2 gap-x-8">
     <div class="flex flex-col gap-4">
@@ -18,8 +21,8 @@
         <input type="file" class="hidden" id="image" name="image" onchange="previewImage()">
       </label>
       <div>
-        <label for="instagram" class="block mb-2 text-sm text-stone-400">Instagram Post</label>
-        <input type="text" name="instagram" v-model="instagramPost" class="
+        <label for="post_url" class="block mb-2 text-sm text-stone-400">Instagram Post</label>
+        <input type="text" name="post_url" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -140,8 +143,8 @@
             " placeholder="0.0" required />
       </div>
       <div>
-        <label for="price" class="block mb-2 text-sm text-stone-400">Capacity</label>
-        <input type="number" name="price" value="<?= $data['price'] ?>" class="
+        <label for="capacity" class="block mb-2 text-sm text-stone-400">Capacity</label>
+        <input type="number" name="capacity" value="<?= $data['price'] ?>" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm

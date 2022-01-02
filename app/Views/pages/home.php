@@ -2,6 +2,9 @@
 
 <?= $this->section("content") ?>
 <div class="w-full h-full flex flex-col gap-10 justify-start items-center">
+    <?php if (session()->getFlashdata('success')) : ?>
+        <div class="w-full text-center px-6 py-3 rounded-md bg-green-100 text-green-600 text-sm font-bold"><?= session()->getFlashdata('success') ?></div>
+    <?php endif ?>
     <?php if (session()->get('logged_in')) : ?>
         <div class="w-4/5 grid grid-cols-2 gap-6 rounded-xl bg-white border-2 border-stone-100">
             <div class="flex flex-col gap-4 p-10">
@@ -9,7 +12,7 @@
                 <p class="text-stone-400 text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ipsa esse rem corporis nisi voluptatem asperiores eos quaerat animi voluptate quas modi, sint dicta unde praesentium totam dolor aspernatur vitae.</p>
             </div>
             <div class="w-full h-full bg-blue-600 rounded-tr-xl rounded-br-xl grid place-content-center">
-                <a href="/create" class="bg-white rounded-md px-9 py-4 text-blue-600 font-extrabold hover:bg-blue-50">Create Event</a>
+                <a href="/events/create" class="bg-white rounded-md px-9 py-4 text-blue-600 font-extrabold hover:bg-blue-50">Create Event</a>
             </div>
         </div>
     <?php endif ?>
@@ -20,11 +23,16 @@
     </div>
     <div class="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-6">
         <?php foreach ($events as $event) : ?>
-            <a href="/events/detail/<?= $event['event_id'] ?>" class="flex flex-col rounded-md shadow cursor-pointer hover:shadow-md">
+            <a href="/events/<?= $event['event_id'] ?>" class="flex flex-col rounded-md shadow cursor-pointer hover:shadow-md">
                 <div class="relative">
                     <div class="absolute w-full">
                         <div class="flex flex-row justify-between m-5">
                             <p class="h-min text-white text-xs font-bold px-4 py-2 bg-stone-900 bg-opacity-75 rounded-md"><?= $event['location'] ?></p>
+                            <?php
+                            // $dateTime = DateTime::createFromFormat('yyyy-mm-dd HH:mm:ss', $event['event_time']);
+                            // $month = $dateTime->format('mm');
+                            // $day = $dateTime->format('dd');
+                            ?>
                             <div class="h-min flex flex-col items-center gap-0">
                                 <p class="text-blue-50 text-sm font-medium"><?= $event['event_time'] ?></p>
                                 <p class="text-white text-base font-extrabold"><?= $event['event_time'] ?></p>

@@ -1,3 +1,6 @@
+<?php
+$isLoggedIn = session()->get('logged_in');
+?>
 <nav class="flex justify-between items-center px-6 py-4">
     <a href="/" class="text-stone-900 text-xl font-bold">Portevn</a>
     <?php if ($isLoggedIn) { ?>

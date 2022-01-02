@@ -22,17 +22,33 @@ class Events extends BaseController
             'title' => "Events",
             'categories' => $categoryModel->getCategories(),
             'events' => $this->model->getEvents(),
-            'isLoggedIn' => session()->get('logged_in'),
+            // 'isLoggedIn' => session()->get('logged_in'),
         ];
 
         return view('pages/home', $data);
     }
 
-    public function create()
+    public function detail($id)
     {
         $data = [
+            'title' => 'Detail Event',
+            'event' => $this->model->getEvents($id),
+            // 'isLoggedIn' => session()->get('logged_in'),
+        ];
+
+        if (empty($data['event'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Event $id not found");
+        }
+
+        return view('pages/detail', $data);
+    }
+
+    public function create()
+    {
+        $model = new CategoryModel();
+        $data = [
             'title' => 'Add an Event',
-            'validation' => \Config\Services::validation(),
+            'categories' => $model->getCategories(),
         ];
 
         return view('pages/create', $data);
@@ -43,28 +59,12 @@ class Events extends BaseController
         $categoryModel = new CategoryModel();
         $data = [
             'title' => 'Update an Event',
-            'validation' => \Config\Services::validation(),
+            // 'validation' => \Config\Services::validation(),
             'event' => $this->model->getEvents($id),
             'categories' => $categoryModel->getCategories(),
-            'isLoggedIn' => session()->get('logged_in'),
         ];
 
         return view('pages/update', $data);
-    }
-
-    public function show($id)
-    {
-        $data = [
-            'title' => 'Detail Event',
-            'event' => $this->model->getEvents($id),
-            'isLoggedIn' => session()->get('logged_in'),
-        ];
-
-        if (empty($data['event'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Event $id not found");
-        }
-
-        return view('pages/detail', $data);
     }
 
     // Actions
@@ -85,8 +85,50 @@ class Events extends BaseController
                     'is_unique' => "{field} is already available",
                 ]
             ],
+            'venue' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'location' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'price' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'capacity' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'post_url' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'contact' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
             'image' => [
-                'rules' => 'max_size[cover,1024]|is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/png]',
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
                 'errors' => [
                     'max_size' => "File size too big",
                     'is_image' => "Choose an image file",
@@ -97,7 +139,9 @@ class Events extends BaseController
             // $validation = \Config\Services::validation();
 
             // return redirect()->to('/comics/create')->withInput()->with('validation', $validation);
-            return redirect()->to('pages/create')->withInput();
+            session()->setFlashdata('error', $this->validator->listErrors());
+
+            return redirect()->to('/events/create')->withInput();
         }
 
         $imageFile = $this->request->getFile('image');
@@ -119,25 +163,17 @@ class Events extends BaseController
             'price' => $this->request->getVar('price'),
             'capacity' => $this->request->getVar('capacity'),
             'image_url' => $imageName,
-            'post_url' => $this->request->getVar('instagram'),
+            'post_url' => $this->request->getVar('post_url'),
             'contact' => $this->request->getVar('contact'),
         ]);
 
-        session()->setFlashdata('message', "Event added!");
+        session()->setFlashdata('success', "Event added!");
 
-        return redirect()->to('/events');
+        return redirect()->to('/');
     }
 
     public function update($id)
     {
-        // $oldComic = $this->model->getComic($this->request->getVar('slug'));
-
-        // if ($oldComic['title'] == $this->request->getVar('title')) {
-        // $rule_title = 'required';
-        // } else {
-        // $rule_title = 'required|is_unique[comics.title]';
-        // }
-
         if (!$this->validate([
             'title' => [
                 'rules' => 'required',
@@ -146,16 +182,66 @@ class Events extends BaseController
                     'is_unique' => "{field} is already available",
                 ]
             ],
-            // 'cover' => [
-            // 'rules' => 'max_size[cover,1024]|is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/png]',
-            // 'errors' => [
-            // 'max_size' => "File size too big",
-            // 'is_image' => "Choose an image file",
-            // 'mime_in' => "Choose an image file",
-            // ]
-            // ]
+            'description' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'venue' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'location' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'price' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'capacity' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'post_url' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'contact' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "{field} must not be empty!",
+                    'is_unique' => "{field} is already available",
+                ]
+            ],
+            'image' => [
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'max_size' => "File size too big",
+                    'is_image' => "Choose an image file",
+                    'mime_in' => "Choose an image file",
+                ]
+            ]
         ])) {
             // $validation = \Config\Services::validation();
+            session()->setFlashdata('error', $this->validator->listErrors());
 
             return redirect()->to("/events/edit/$id")->withInput();
         }
@@ -186,7 +272,22 @@ class Events extends BaseController
             'contact' => $this->request->getVar('contact'),
         ]);
 
-        session()->setFlashdata('alert', 'Event updated!');
+        session()->setFlashdata('success', 'Event updated!');
+
+        return redirect()->to('/');
+    }
+
+    public function delete($id)
+    {
+        $event = $this->model->find($id);
+
+        if ($event['image_url'] != 'default.jpg') {
+            unlink('img/' . $event['image_url']);
+        }
+
+        $this->model->delete($id);
+
+        session()->setFlashdata('success', 'Event deleted!');
 
         return redirect()->to('/');
     }

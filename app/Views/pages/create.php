@@ -1,10 +1,11 @@
 <?= $this->extend('layout/template') ?>
 
 <?= $this->section("content") ?>
-<form class="w-full h-full flex flex-col" action="/events/create" method="POST" enctype="multipart/form-data">
-  <div class="flex gap-4">
-    <h1 class="text-stone-900 text-base font-bold mb-6">Add Event Form</h1>
-  </div>
+<form class="w-full h-full flex flex-col" action="/events/save" method="POST" enctype="multipart/form-data">
+  <?php if (session()->getFlashdata('error')) : ?>
+    <div class="w-full text-center px-6 py-3 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
+  <?php endif ?>
+  <h1 class="text-stone-900 text-base font-bold mb-6">Add Event Form</h1>
   <div class="grid grid-cols-2 gap-x-8">
     <div class="flex flex-col gap-4">
       <img src="/img/default.png" alt="preview" class="w-full h-[400px] rounded-md img-preview">
@@ -13,8 +14,8 @@
         <input type="file" class="hidden" id="image" name="image" onchange="previewImage()">
       </label>
       <div>
-        <label for="instagram" class="block mb-2 text-sm text-stone-400">Instagram Post</label>
-        <input type="text" name="instagram" v-model="instagramPost" class="
+        <label for="post_url" class="block mb-2 text-sm text-stone-400">Instagram Post</label>
+        <input type="text" name="post_url" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -23,11 +24,11 @@
               focus:ring-2 focus:ring-blue-300 focus:outline-none
               w-full
               p-3
-            " placeholder="Awesome IG post" />
+            " placeholder="Your Instagram Post" />
       </div>
       <div>
         <label for="contact" class="block mb-2 text-sm text-stone-400">Contact</label>
-        <input type="number" name="contact" v-model="contact" class="
+        <input type="number" name="contact" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -43,7 +44,7 @@
     <div class="flex flex-col gap-4">
       <div>
         <label for="email" class="block mb-2 text-sm text-stone-400">Event name</label>
-        <input type="text" name="title" :v-model="name" class="
+        <input type="text" name="title" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -56,7 +57,7 @@
       </div>
       <div>
         <label for="description" class="block mb-2 text-sm text-stone-400">Event description</label>
-        <textarea type="text" name="description" v-model="description" rows="6" class="
+        <textarea type="text" name="description" rows="6" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -69,7 +70,7 @@
       </div>
       <div>
         <label for="event_time" class="block mb-2 text-sm text-stone-400">Event time</label>
-        <input type="datetime-local" name="event_time" v-model="eventTime" class="
+        <input type="datetime-local" name="event_time" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -81,7 +82,7 @@
       </div>
       <div>
         <label for="category" class="block mb-2 text-sm text-stone-400">Event category</label>
-        <select name="category" ref="category" class="
+        <select name="category" class="
               bg-stone-50
               text-stone-900 text-sm
               p-3
@@ -97,7 +98,7 @@
       </div>
       <div>
         <label for="venue" class="block mb-2 text-sm text-stone-400">Event venue</label>
-        <input type="text" name="venue" v-model="venue" class="
+        <input type="text" name="venue" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -110,7 +111,7 @@
       </div>
       <div>
         <label for="location" class="block mb-2 text-sm text-stone-400">Event location</label>
-        <input type="text" name="location" v-model="location" class="
+        <input type="text" name="location" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -123,7 +124,7 @@
       </div>
       <div>
         <label for="price" class="block mb-2 text-sm text-stone-400">Event price</label>
-        <input type="number" name="price" v-model="price" class="
+        <input type="number" name="price" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -136,7 +137,7 @@
       </div>
       <div>
         <label for="price" class="block mb-2 text-sm text-stone-400">Capacity</label>
-        <input type="number" name="capacity" v-model="price" class="
+        <input type="number" name="capacity" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -147,7 +148,7 @@
               p-3
             " placeholder="0" required />
       </div>
-      <button type="submit" @click="handleSave" class="
+      <button type="submit" class="
             bg-blue-600
             px-6
             py-4

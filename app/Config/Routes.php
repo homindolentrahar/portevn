@@ -34,9 +34,9 @@ $routes->setAutoRoute(true);
 // $routes->get('/', 'Home::index');
 // $routes->resource('events');
 $routes->get('/', 'Events::index');
-$routes->get('events/detail/(:any)', 'Events::show/$1');
+$routes->get('events/(:num)', 'Events::detail/$1');
 $routes->get('events/create', 'Events::create');
-$routes->get('events/edit/(:any)', 'Events::edit/$1');
+$routes->get('events/edit/(:num)', 'Events::edit/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
