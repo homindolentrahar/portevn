@@ -15,7 +15,7 @@ class Events extends BaseController
     }
 
     // Views
-    public function index($slug = false)
+    public function index()
     {
         $categoryModel = new CategoryModel();
 
@@ -297,7 +297,7 @@ class Events extends BaseController
             'price' => $this->request->getVar('price'),
             'capacity' => $this->request->getVar('capacity'),
             'image_url' => $imageName,
-            'post_url' => $this->request->getVar('instagram'),
+            'post_url' => $this->request->getVar('post_url'),
             'contact' => $this->request->getVar('contact'),
             'user_id' => session()->get('user_id'),
         ]);

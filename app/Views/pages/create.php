@@ -24,7 +24,7 @@
               focus:ring-2 focus:ring-blue-300 focus:outline-none
               w-full
               p-3
-            " placeholder="Your Instagram Post" />
+            " placeholder="Your Instagram Post URL" />
       </div>
       <div>
         <label for="contact" class="block mb-2 text-sm text-stone-400">Contact</label>
@@ -92,7 +92,7 @@
             ">
           <option value="default">Choose a category</option>
           <?php foreach ($categories as $cat) : ?>
-            <option value="<?= $cat['category_id'] ?>"><?= $cat['name'] ?></option>
+            <option value="<?= $cat['category_id'] ?>"><?= $cat['category_name'] ?></option>
           <?php endforeach ?>
         </select>
       </div>
