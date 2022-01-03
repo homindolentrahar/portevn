@@ -32,17 +32,17 @@ class Login extends BaseController
         $email = $this->request->getVar('email');
         $password = $this->request->getVar('password');
 
-        $data = $this->model->where('email', $email)->first();
+        $data = $this->model->where('user_email', $email)->first();
 
         if ($data) {
-            $pass = $data['password'];
+            $pass = $data['user_password'];
             $verifyPass = password_verify($password, $pass);
 
             if ($verifyPass) {
                 $sessionData = [
                     'user_id' => $data['user_id'],
-                    'name' => $data['name'],
-                    'email' => $data['email'],
+                    'user_name' => $data['user_name'],
+                    'user_email' => $data['user_email'],
                     'logged_in' => true,
                 ];
 

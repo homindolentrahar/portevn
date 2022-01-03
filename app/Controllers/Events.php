@@ -15,14 +15,28 @@ class Events extends BaseController
     }
 
     // Views
-    public function index()
+    public function index($slug = false)
     {
         $categoryModel = new CategoryModel();
+
         $data = [
             'title' => "Events",
             'categories' => $categoryModel->getCategories(),
             'events' => $this->model->getEvents(),
-            // 'isLoggedIn' => session()->get('logged_in'),
+        ];
+
+
+        return view('pages/home', $data);
+    }
+
+    public function filtered($slug)
+    {
+        $categoryModel = new CategoryModel();
+
+        $data = [
+            'title' => "Events | $slug",
+            'categories' => $categoryModel->getCategories(),
+            'events' => $this->model->getFilteredEvents($slug),
         ];
 
         return view('pages/home', $data);
@@ -30,10 +44,13 @@ class Events extends BaseController
 
     public function detail($id)
     {
+        $events = $this->model->getEvents($id);
+
         $data = [
             'title' => 'Detail Event',
-            'event' => $this->model->getEvents($id),
-            // 'isLoggedIn' => session()->get('logged_in'),
+            'event' => $events,
+            'logged_in' => session()->get('logged_in'),
+            'is_owner' => $events[0]['user_id'] == session()->get('user_id'),
         ];
 
         if (empty($data['event'])) {
@@ -45,26 +62,41 @@ class Events extends BaseController
 
     public function create()
     {
-        $model = new CategoryModel();
-        $data = [
-            'title' => 'Add an Event',
-            'categories' => $model->getCategories(),
-        ];
+        $logged_in = session()->get('logged_in');
 
-        return view('pages/create', $data);
+        if ($logged_in) {
+            $model = new CategoryModel();
+            $data = [
+                'title' => 'Add an Event',
+                'categories' => $model->getCategories(),
+            ];
+
+            return view('pages/create', $data);
+        } else {
+            session()->setFlashdata('error', "You're not authorized to see the page");
+            return redirect()->to('/');
+        }
     }
 
     public function edit($id)
     {
-        $categoryModel = new CategoryModel();
-        $data = [
-            'title' => 'Update an Event',
-            // 'validation' => \Config\Services::validation(),
-            'event' => $this->model->getEvents($id),
-            'categories' => $categoryModel->getCategories(),
-        ];
+        $model = $this->model->getEvents($id);
+        $logged_in = session()->get('logged_in');
+        $is_owner = $model[0]['user_id'] == session()->get('user_id');
 
-        return view('pages/update', $data);
+        if ($logged_in && $is_owner) {
+            $categoryModel = new CategoryModel();
+            $data = [
+                'title' => 'Update an Event',
+                'event' => $model,
+                'categories' => $categoryModel->getCategories(),
+            ];
+
+            return view('pages/update', $data);
+        } else {
+            session()->setFlashdata('error', "You're not authorized to see the page");
+            return redirect()->to('/');
+        }
     }
 
     // Actions
@@ -136,9 +168,6 @@ class Events extends BaseController
                 ]
             ]
         ])) {
-            // $validation = \Config\Services::validation();
-
-            // return redirect()->to('/comics/create')->withInput()->with('validation', $validation);
             session()->setFlashdata('error', $this->validator->listErrors());
 
             return redirect()->to('/events/create')->withInput();
@@ -165,6 +194,7 @@ class Events extends BaseController
             'image_url' => $imageName,
             'post_url' => $this->request->getVar('post_url'),
             'contact' => $this->request->getVar('contact'),
+            'user_id' => session()->get('user_id'),
         ]);
 
         session()->setFlashdata('success', "Event added!");
@@ -240,7 +270,6 @@ class Events extends BaseController
                 ]
             ]
         ])) {
-            // $validation = \Config\Services::validation();
             session()->setFlashdata('error', $this->validator->listErrors());
 
             return redirect()->to("/events/edit/$id")->withInput();
@@ -270,6 +299,7 @@ class Events extends BaseController
             'image_url' => $imageName,
             'post_url' => $this->request->getVar('instagram'),
             'contact' => $this->request->getVar('contact'),
+            'user_id' => session()->get('user_id'),
         ]);
 
         session()->setFlashdata('success', 'Event updated!');
@@ -291,49 +321,4 @@ class Events extends BaseController
 
         return redirect()->to('/');
     }
-
-    // public function update()
-    // {
-    //     $image = $this->request->getFile('image');
-
-    //     if ($image->getError() == 4) {
-    //         $imageName = 'default.jpg';
-    //     } else {
-    //         $imageName = $image->getRandomName();
-    //         $image->move('img', $imageName);
-    //     }
-
-    //     $this->model->update($this->request->getVar('id'), [
-    //         'title' => $this->request->getVar('title'),
-    //         'description' => $this->request->getVar('description'),
-    //         'event_time' => $this->request->getVar('event_time'),
-    //         'category_id' => $this->request->getVar('category'),
-    //         'venue' => $this->request->getVar('venue'),
-    //         'location' => $this->request->getVar('location'),
-    //         'price' => $this->request->getVar('price'),
-    //         'capacity' => $this->request->getVar('capacity'),
-    //         'image_url' => $imageName,
-    //         'post_url' => $this->request->getVar('instagram'),
-    //         'contact' => $this->request->getVar('contact'),
-    //     ]);
-
-    //     session()->setFlashdata('message', "Event updated!");
-
-    //     return redirect()->to('/');
-    // }
-
-    // public function delete($id)
-    // {
-    //     $comic = $this->model->find($id);
-
-    //     if ($comic['cover'] != 'default.jpg') {
-    //         unlink('img/' . $comic['cover']);
-    //     }
-
-    //     $this->model->delete($id);
-
-    //     session()->setFlashdata('alert', 'Comic deleted!');
-
-    //     return redirect()->to('/comics');
-    // }  
 }

@@ -23,7 +23,9 @@
           ">
                     Kembali
                 </a>
-                <a href="/events/edit/<?= $event[0]['event_id'] ?>" class="rounded-md px-6 py-3 bg-amber-50 text-amber-600 font-bold hover:bg-amber-100">Edit</a>
+                <?php if ($logged_in && $is_owner) { ?>
+                    <a href="/events/edit/<?= $event[0]['event_id'] ?>" class="rounded-md px-6 py-3 bg-amber-50 text-amber-600 font-bold hover:bg-amber-100">Edit</a>
+                <?php } ?>
             </div>
             <div class="flex flex-col mt-8 gap-2">
                 <h1 class="text-slate-900 text-4xl font-extrabold">
@@ -33,12 +35,12 @@
                     <?= $event[0]['description'] ?>
                 </p>
                 <p class="mt-2 text-blue-600 font-bold text-sm">
-                    <?= $event[0]['name'] ?>
+                    <?= $event[0]['category_name'] ?>
                 </p>
                 <div class="w-fit px-8 py-6 rounded-lg bg-white shadow">
                     <?= $event[0]['event_time'] ?>
                 </div>
-                <div class="w-6/12 flex gap-4 px-8 py-6 rounded-lg bg-white shadow">
+                <div class="w-min flex gap-4 px-8 py-6 rounded-lg bg-white shadow">
                     <!-- Icon -->
                     <div class="flex flex-col gap-2">
                         <h1 class="text-stone-900 text-base font-bold">
@@ -50,9 +52,16 @@
                     </div>
                     <!-- Another Icon -->
                 </div>
+                <div class="w-min mt-10 flex flex-col px-6 py-3 gap-2 rounded-lg bg-white shadow">
+                    <p class="text-stone-300 text-sm font-semibold">Author</p>
+                    <div class="flex flex-col gap-0 items-start">
+                        <h1 class="text-stone-900 text-base font-bold"><?= $event[0]['user_name'] ?></h1>
+                        <p class="text-gray-400 text-xs font-normal"><?= $event[0]['user_email'] ?></p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-8">
             <?php if ($event[0]['image_url']) { ?>
                 <img src="/img/<?= $event[0]['image_url'] ?>" alt="<?= $event[0]['title'] ?>" class="rounded-md h-[480px]">
             <?php } else { ?>
