@@ -2,9 +2,6 @@
 
 <?= $this->section("content") ?>
 <form class="w-full h-full flex flex-col" action="/events/save" method="POST" enctype="multipart/form-data">
-  <?php if (session()->getFlashdata('error')) : ?>
-    <div class="w-full text-center px-6 py-3 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
-  <?php endif ?>
   <?php
   if (isset($_SERVER['HTTP_REFERER'])) {
     $url = $_SERVER['HTTP_REFERER'];
@@ -25,7 +22,7 @@
             text-stone-600 text-sm
             font-bold
             cursor-pointer
-            hover:bg-blue-100
+            hover:bg-stone-100
             transition-all
             duration-300
           ">

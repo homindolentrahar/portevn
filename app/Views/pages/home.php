@@ -1,17 +1,11 @@
 <?= $this->extend('layout/template') ?>
 
 <?= $this->section("content") ?>
+<?php
+
+use CodeIgniter\HTTP\URI;
+?>
 <div class="w-full h-full flex flex-col gap-10 justify-start items-center">
-    <?php
-
-    use CodeIgniter\HTTP\URI;
-
-    if (session()->getFlashdata('success')) : ?>
-        <div class="w-full text-center px-6 py-3 rounded-md bg-green-100 text-green-600 text-sm font-bold"><?= session()->getFlashdata('success') ?></div>
-    <?php endif ?>
-    <?php if (session()->getFlashdata('error')) : ?>
-        <div class="w-full text-center px-6 py-3 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
-    <?php endif ?>
     <?php if (session()->get('logged_in')) : ?>
         <div class="w-4/5 grid grid-cols-2 gap-6 rounded-xl bg-white border-2 border-stone-100">
             <div class="flex flex-col gap-4 p-10">

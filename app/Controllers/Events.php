@@ -124,18 +124,6 @@ class Events extends BaseController
         }
     }
 
-    public function process($id)
-    {
-        $model = $this->model->getEvents($id);
-        $logged_in = session()->get('logged_in');
-
-        if ($logged_in) {
-        } else {
-            session()->setFlashdata('error', "You're not authorized to see the page");
-            return redirect()->to('/');
-        }
-    }
-
     // Actions
     public function save()
     {

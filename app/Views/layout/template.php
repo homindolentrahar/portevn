@@ -14,7 +14,14 @@
 
 <body>
     <?= $this->include('layout/nav') ?>
-    <div class="w-full h-screen p-8">
+    <div class="w-full h-screen flex flex-col items-center gap-8 p-8">
+        <?php
+        if (session()->getFlashdata('success')) : ?>
+            <div class="w-5/12 text-center px-12 py-4 rounded-md bg-green-100 text-green-600 text-sm font-bold"><?= session()->getFlashdata('success') ?></div>
+        <?php endif ?>
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div class="w-5/12 text-center px-12 py-4 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
+        <?php endif ?>
         <?= $this->renderSection("content") ?>
     </div>
 

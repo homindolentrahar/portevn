@@ -22,7 +22,7 @@
             text-stone-600 text-sm
             font-bold
             cursor-pointer
-            hover:bg-blue-100
+            hover:bg-stone-100
             transition-all
             duration-300
           ">
@@ -128,20 +128,22 @@
             </div>
         </div>
         <div class="w-full divide-x-4 divide-gray-900"></div>
-        <form method="POST" class="w-6/12 flex flex-col items-center gap-6">
+        <form action="/booking/process" method="POST" class="w-6/12 flex flex-col items-center gap-6">
             <h1 class="text-stone-900 text-base font-bold">Participant Detail</h1>
             <div class="w-full flex flex-col gap-3">
+                <input type="hidden" name="event_id" value="<?= $data['event_id'] ?>">
                 <input type="text" name="name" placeholder="Your awesome name" class="p-3 bg-gray-50 rounded-md border-2 border-stone-100 placeholder-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300" value="<?= session()->get('user_name') ?>" required>
                 <input type="email" name="email" placeholder="awesome@mail.com" class="p-3 bg-gray-50 rounded-md border-2 border-stone-100 placeholder-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300" value="<?= session()->get('user_email') ?>" required>
                 <input type="phone" name="phone" placeholder="0857-xxxx-xxxx" class="p-3 bg-gray-50 rounded-md border-2 border-stone-100 placeholder-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+                <input type="number" name="amount" max="<?= $event[0]['capacity'] ?>" placeholder="2 Tickets pls" class="p-3 bg-gray-50 rounded-md border-2 border-stone-100 placeholder-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300" required>
             </div>
             <div class="w-full rounded-md bg-white border-2 border-stone-100 px-6 py-4 flex flex-col items-center gap-2">
                 <h1 class="text-stone-900 font-bold">Notes</h1>
                 <p class="text-stone-300 text-sm font-normal">Invoice's detail regarding ticket(s) and meeting link, will be send to the corresponding email</p>
             </div>
-            <a href="/events/process/<?= $data['event_id'] ?>" class="w-full rounded-md bg-blue-600 text-center text-white font-bold px-7 py-4 hover:bg-blue-700">Check Out</a>
+            <button type="submit" class="w-full rounded-md bg-blue-600 text-center text-white font-bold px-7 py-4 hover:bg-blue-700">Check Out</button>
         </form>
-        <div class="flex flex-col gap-3 mt-10">
+        <div class="flex flex-col items-center gap-12 mt-10">
             <h1 class="text-stone-900 font-bold">Recommended for you</h1>
             <div class="grid grid-cols-3 gap-x-6">
                 <?php foreach ($recommendations as $event) { ?>

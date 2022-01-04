@@ -57,9 +57,6 @@
     </a>
   </div>
   <div class="p-8">
-    <?php if (session()->getFlashdata('error')) : ?>
-      <div class="w-full text-center px-6 py-3 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
-    <?php endif ?>
     <input type="hidden" name="event_id" value="<?= $data['event_id'] ?>">
     <input type="hidden" name="previous_image" value="<?= $data['image_url'] ?>">
     <h1 class="text-stone-900 text-base font-bold mb-6">Update Event Form</h1>
@@ -128,7 +125,7 @@
         </div>
         <div>
           <label for="event_time" class="block mb-2 text-sm text-stone-400">Event time</label>
-          <input type="date" name="event_time" value="<?= date('Y-m-d', strtotime($data['event_time'])) ?>" class="
+          <input type="datetime-local" name="event_time" value="<?= date('Y-m-d H:i:s', strtotime($data['event_time'])) ?>" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm

@@ -40,11 +40,4 @@ class EventModel extends Model
             ->get()
             ->getResultArray();
     }
-
-    public function updateEventCapacity($eventId)
-    {
-        $oldModels = $this->where('event_id', $eventId)->first();
-        $oldCapacity = $oldModels[0]['capacity'];
-        $oldModels[0]['capacity'] = $oldCapacity - 1;
-    }
 }

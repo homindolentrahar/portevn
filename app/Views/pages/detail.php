@@ -16,7 +16,7 @@
             text-stone-600 text-sm
             font-bold
             cursor-pointer
-            hover:bg-blue-100
+            hover:bg-stone-100
             transition-all
             duration-300
           ">
@@ -116,7 +116,9 @@
             <?php } else { ?>
                 <div class="bg-gray-100 h-[480px] rounded-md"></div>
             <?php } ?>
-            <a href="/events/book/<?= $event[0]['event_id'] ?>" class="
+            <?php if (!$is_owner) { ?>
+                <?php if ($event[0]['capacity'] > 0) { ?>
+                    <a href="/booking/<?= $event[0]['event_id'] ?>" class="
           bg-blue-600
           text-center text-white text-lg
           font-bold
@@ -126,8 +128,20 @@
           transition-all
           duration-300
         ">
-                Book a ticket
-            </a>
+                        Book a ticket
+                    </a>
+                <?php } else { ?>
+                    <div class="
+          bg-stone-200
+          text-center text-stone-400 text-lg
+          font-bold
+          p-5
+          rounded
+        ">
+                        Full Booked
+                    </div>
+                <?php } ?>
+            <?php } ?>
             <div class="w-full flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
