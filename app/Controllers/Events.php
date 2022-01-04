@@ -99,6 +99,43 @@ class Events extends BaseController
         }
     }
 
+    public function book($id)
+    {
+        $model = $this->model->getEvents($id);
+        $logged_in = session()->get('logged_in');
+        $recommendations = $this->model->getFilteredEvents($model[0]['category_slug']);
+
+        if ($logged_in) {
+            if ($model[0]['capacity'] == 0) {
+                session()->setFlashdata('error', "Event is not accepting more participant");
+                return redirect()->to("events/$id");
+            }
+
+            $data = [
+                'title' => "Book an Event",
+                'event' => $model,
+                'recommendations' => $recommendations,
+            ];
+
+            return view('pages/book', $data);
+        } else {
+            session()->setFlashdata('error', "You're not authorized to see the page");
+            return redirect()->to('/');
+        }
+    }
+
+    public function process($id)
+    {
+        $model = $this->model->getEvents($id);
+        $logged_in = session()->get('logged_in');
+
+        if ($logged_in) {
+        } else {
+            session()->setFlashdata('error', "You're not authorized to see the page");
+            return redirect()->to('/');
+        }
+    }
+
     // Actions
     public function save()
     {

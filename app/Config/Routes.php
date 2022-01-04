@@ -40,6 +40,8 @@ $routes->get('/signup', 'Signup::index');
 $routes->get('events/(:num)', 'Events::detail/$1');
 $routes->get('events/create', 'Events::create');
 $routes->get('events/edit/(:num)', 'Events::edit/$1');
+$routes->get('events/book/(:num)', 'Events::book/$1');
+$routes->get('events/process/(:num)', 'Events::process/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

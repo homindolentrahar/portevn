@@ -195,7 +195,7 @@
         </div>
         <div>
           <label for="capacity" class="block mb-2 text-sm text-stone-400">Capacity</label>
-          <input type="number" name="capacity" value="<?= $data['price'] ?>" class="
+          <input type="number" name="capacity" value="<?= $data['capacity'] ?>" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm

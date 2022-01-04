@@ -7,13 +7,13 @@
             flex
             items-center
             gap-3
-            bg-blue-50
+            bg-stone-50
             pl-5
             pr-9
             py-3
             w-min
             rounded-md
-            text-blue-600 text-sm
+            text-stone-600 text-sm
             font-bold
             cursor-pointer
             hover:bg-blue-100
@@ -45,33 +45,35 @@
                             <?= $event[0]['description'] ?>
                         </p>
                     </div>
-                    <p class="text-blue-600 font-bold text-sm">
+                    <div class="w-min rounded-md bg-blue-50 text-blue-600 font-bold text-sm px-6 py-3">
                         <?= $event[0]['category_name'] ?>
-                    </p>
+                    </div>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <div class="md:w-4/12 w-min flex items-center gap-4 px-6 py-4 rounded-md text-stone-800 text-sm font-bold bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
-                        <?php
-                        $time = strtotime($event[0]['event_time']);
-                        $dateTime = date('d M Y', $time);
-                        ?>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <?= $dateTime ?>
-                    </div>
-                    <div class="w-min md:w-4/12 flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <div class="flex flex-col gap-0">
-                            <h1 class="text-stone-800 text-sm font-bold">
-                                <?= $event[0]['venue'] ?>
-                            </h1>
-                            <p class="text-stone-400 text-xs font-normal">
-                                <?= $event[0]['location'] ?>
-                            </p>
+                    <div class="flex flex-row gap-8">
+                        <div class="md:w-4/12 w-min flex items-center gap-4 px-6 py-4 rounded-md text-stone-800 text-sm font-bold bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
+                            <?php
+                            $time = strtotime($event[0]['event_time']);
+                            $dateTime = date('d M Y', $time);
+                            ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <?= $dateTime ?>
+                        </div>
+                        <div class="w-min md:w-4/12 flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <div class="flex flex-col gap-0">
+                                <h1 class="text-stone-800 text-sm font-bold">
+                                    <?= $event[0]['venue'] ?>
+                                </h1>
+                                <p class="text-stone-400 text-xs font-normal">
+                                    <?= $event[0]['location'] ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <a target="_blank" href="<?= $event[0]['post_url'] ?>" class="md:w-4/12 w-min flex items-center gap-4 px-6 py-4 rounded-md text-stone-800 text-sm font-bold bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
@@ -80,6 +82,19 @@
                         </svg>
                         Instagram Post
                     </a>
+                    <div class="w-min md:w-4/12 flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <div class="flex flex-col gap-0">
+                            <h1 class="text-stone-800 text-sm font-bold">
+                                <?= $event[0]['capacity'] ?> slot
+                            </h1>
+                            <p class="text-stone-400 text-xs font-normal">
+                                Capacity
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="w-min md:w-6/12 flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow">
@@ -101,9 +116,9 @@
             <?php } else { ?>
                 <div class="bg-gray-100 h-[480px] rounded-md"></div>
             <?php } ?>
-            <button class="
+            <a href="/events/book/<?= $event[0]['event_id'] ?>" class="
           bg-blue-600
-          text-white text-lg
+          text-center text-white text-lg
           font-bold
           p-5
           rounded
@@ -112,7 +127,7 @@
           duration-300
         ">
                 Book a ticket
-            </button>
+            </a>
             <div class="w-full flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />

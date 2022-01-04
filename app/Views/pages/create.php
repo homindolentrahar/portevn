@@ -5,17 +5,50 @@
   <?php if (session()->getFlashdata('error')) : ?>
     <div class="w-full text-center px-6 py-3 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
   <?php endif ?>
-  <h1 class="text-stone-900 text-base font-bold mb-6">Add Event Form</h1>
-  <div class="grid grid-cols-2 gap-x-8">
-    <div class="flex flex-col gap-4">
-      <img src="/img/default.png" alt="preview" class="w-full h-[400px] rounded-md img-preview">
-      <label class="px-6 py-4 rounded-md bg-blue-600 text-white text-sm font-bold text-center hover:bg-blue-700 cursor-pointer">
-        Select Image
-        <input type="file" class="hidden" id="image" name="image" onchange="previewImage()">
-      </label>
-      <div>
-        <label for="post_url" class="block mb-2 text-sm text-stone-400">Instagram Post</label>
-        <input type="text" name="post_url" class="
+  <?php
+  if (isset($_SERVER['HTTP_REFERER'])) {
+    $url = $_SERVER['HTTP_REFERER'];
+  } else {
+    $url = "/";
+  }
+  ?>
+  <a href="<?= $url ?>" class="
+            flex
+            items-center
+            gap-3
+            bg-stone-50
+            pl-5
+            pr-9
+            py-3
+            w-min
+            rounded-md
+            text-stone-600 text-sm
+            font-bold
+            cursor-pointer
+            hover:bg-blue-100
+            transition-all
+            duration-300
+          ">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Back
+  </a>
+  <div class="p-8">
+    <?php if (session()->getFlashdata('error')) : ?>
+      <div class="w-full text-center px-6 py-3 rounded-md bg-red-100 text-red-600 text-sm font-bold"><?= session()->getFlashdata('error') ?></div>
+    <?php endif ?>
+    <h1 class="text-stone-900 text-base font-bold mb-6">Add Event Form</h1>
+    <div class="grid grid-cols-2 gap-x-8">
+      <div class="flex flex-col gap-4">
+        <img src="/img/default.png" alt="preview" class="w-full h-[400px] rounded-md img-preview">
+        <label class="px-6 py-4 rounded-md bg-blue-600 text-white text-sm font-bold text-center hover:bg-blue-700 cursor-pointer">
+          Select Image
+          <input type="file" class="hidden" id="image" name="image" onchange="previewImage()">
+        </label>
+        <div>
+          <label for="post_url" class="block mb-2 text-sm text-stone-400">Instagram Post</label>
+          <input type="text" name="post_url" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -25,10 +58,10 @@
               w-full
               p-3
             " placeholder="Your Instagram Post URL" />
-      </div>
-      <div>
-        <label for="contact" class="block mb-2 text-sm text-stone-400">Contact</label>
-        <input type="number" name="contact" class="
+        </div>
+        <div>
+          <label for="contact" class="block mb-2 text-sm text-stone-400">Contact</label>
+          <input type="number" name="contact" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -38,13 +71,13 @@
               w-full
               p-3
             " placeholder="0856-xxxx-xxxx" required />
+        </div>
+        <div class="flex gap-x-6"></div>
       </div>
-      <div class="flex gap-x-6"></div>
-    </div>
-    <div class="flex flex-col gap-4">
-      <div>
-        <label for="email" class="block mb-2 text-sm text-stone-400">Event name</label>
-        <input type="text" name="title" class="
+      <div class="flex flex-col gap-4">
+        <div>
+          <label for="email" class="block mb-2 text-sm text-stone-400">Event name</label>
+          <input type="text" name="title" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -54,10 +87,10 @@
               w-full
               p-3
             " placeholder="Your awesome event" required />
-      </div>
-      <div>
-        <label for="description" class="block mb-2 text-sm text-stone-400">Event description</label>
-        <textarea type="text" name="description" rows="6" class="
+        </div>
+        <div>
+          <label for="description" class="block mb-2 text-sm text-stone-400">Event description</label>
+          <textarea type="text" name="description" rows="6" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -67,10 +100,10 @@
               w-full
               p-3
             " placeholder="Detail about your event" required></textarea>
-      </div>
-      <div>
-        <label for="event_time" class="block mb-2 text-sm text-stone-400">Event time</label>
-        <input type="datetime-local" name="event_time" class="
+        </div>
+        <div>
+          <label for="event_time" class="block mb-2 text-sm text-stone-400">Event time</label>
+          <input type="datetime-local" name="event_time" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -79,10 +112,10 @@
               focus:ring-2 focus:ring-blue-300 focus:outline-none
               p-3
             " />
-      </div>
-      <div>
-        <label for="category" class="block mb-2 text-sm text-stone-400">Event category</label>
-        <select name="category" class="
+        </div>
+        <div>
+          <label for="category" class="block mb-2 text-sm text-stone-400">Event category</label>
+          <select name="category" class="
               bg-stone-50
               text-stone-900 text-sm
               p-3
@@ -90,15 +123,15 @@
               border-2 border-stone-100
               focus:ring-2 focus:ring-blue-300 focus:outline-none
             ">
-          <option value="default">Choose a category</option>
-          <?php foreach ($categories as $cat) : ?>
-            <option value="<?= $cat['category_id'] ?>"><?= $cat['category_name'] ?></option>
-          <?php endforeach ?>
-        </select>
-      </div>
-      <div>
-        <label for="venue" class="block mb-2 text-sm text-stone-400">Event venue</label>
-        <input type="text" name="venue" class="
+            <option value="default">Choose a category</option>
+            <?php foreach ($categories as $cat) : ?>
+              <option value="<?= $cat['category_id'] ?>"><?= $cat['category_name'] ?></option>
+            <?php endforeach ?>
+          </select>
+        </div>
+        <div>
+          <label for="venue" class="block mb-2 text-sm text-stone-400">Event venue</label>
+          <input type="text" name="venue" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -108,10 +141,10 @@
               w-full
               p-3
             " placeholder="Cool place to held event" required />
-      </div>
-      <div>
-        <label for="location" class="block mb-2 text-sm text-stone-400">Event location</label>
-        <input type="text" name="location" class="
+        </div>
+        <div>
+          <label for="location" class="block mb-2 text-sm text-stone-400">Event location</label>
+          <input type="text" name="location" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -121,10 +154,10 @@
               w-full
               p-3
             " placeholder="Venue location" required />
-      </div>
-      <div>
-        <label for="price" class="block mb-2 text-sm text-stone-400">Event price</label>
-        <input type="number" name="price" class="
+        </div>
+        <div>
+          <label for="price" class="block mb-2 text-sm text-stone-400">Event price</label>
+          <input type="number" name="price" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -134,10 +167,10 @@
               w-full
               p-3
             " placeholder="0.0" required />
-      </div>
-      <div>
-        <label for="price" class="block mb-2 text-sm text-stone-400">Capacity</label>
-        <input type="number" name="capacity" class="
+        </div>
+        <div>
+          <label for="price" class="block mb-2 text-sm text-stone-400">Capacity</label>
+          <input type="number" name="capacity" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
@@ -147,8 +180,8 @@
               w-full
               p-3
             " placeholder="0" required />
-      </div>
-      <button type="submit" class="
+        </div>
+        <button type="submit" class="
             bg-blue-600
             px-6
             py-4
@@ -157,8 +190,9 @@
             rounded-md
             my-6
           ">
-        Post an Event
-      </button>
+          Post an Event
+        </button>
+      </div>
     </div>
   </div>
   </fo>
