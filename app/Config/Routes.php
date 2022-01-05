@@ -42,6 +42,7 @@ $routes->get('events/create', 'Events::create');
 $routes->get('events/edit/(:num)', 'Events::edit/$1');
 $routes->get('events/book/(:num)', 'Events::book/$1');
 $routes->get('booking/(:num)', 'Booking::index/$1');
+$routes->get('profile', 'Profile::index');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

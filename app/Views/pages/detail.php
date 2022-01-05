@@ -54,7 +54,7 @@
                         <div class="md:w-4/12 w-min flex items-center gap-4 px-6 py-4 rounded-md text-stone-800 text-sm font-bold bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
                             <?php
                             $time = strtotime($event[0]['event_time']);
-                            $dateTime = date('d M Y', $time);
+                            $dateTime = date('d M Y | H:i', $time);
                             ?>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

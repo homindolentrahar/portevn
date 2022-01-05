@@ -5,9 +5,9 @@ $isLoggedIn = session()->get('logged_in');
     <a href="/" class="text-stone-900 text-xl font-bold">Portevn</a>
     <?php if ($isLoggedIn) { ?>
         <div class="flex gap-4 items-center">
-            <div class="cursor-pointer text-stone-400 text-sm font-semibold">
+            <a href="/profile" class="cursor-pointer text-stone-400 text-sm font-semibold">
                 Hello <span class="text-stone-900 font-bold"><?= session()->get('user_name') ?></span> !
-            </div>
+            </a>
             <a href="/login/logout" class="text-red-600 bg-red-50 text-base font-bold px-7 py-3 rounded-md hover:bg-red-100">Logout</a>
         </div>
     <?php } else { ?>

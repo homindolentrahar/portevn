@@ -125,7 +125,7 @@
         </div>
         <div>
           <label for="event_time" class="block mb-2 text-sm text-stone-400">Event time</label>
-          <input type="datetime-local" name="event_time" value="<?= date('Y-m-d H:i:s', strtotime($data['event_time'])) ?>" class="
+          <input type="datetime-local" name="event_time" value="<?= date('Y-m-d\TH:i:s', strtotime($data['event_time'])) ?>" class="
               bg-stone-50
               border-2 border-stone-100
               text-stone-900 text-sm
