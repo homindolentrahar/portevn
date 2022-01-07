@@ -123,7 +123,7 @@
                 <?php if ($event[0]['price'] == 0) { ?>
                     <h1 class="text-blue-600 text-4xl font-extrabold">Free</h1>
                 <?php } else { ?>
-                    <h1 class="text-blue-600 text-4xl font-extrabold"><?= $data['price'] ?></h1>
+                    <h1 class="text-blue-600 text-4xl font-extrabold">Rp.<?= $data['price'] ?></h1>
                 <?php } ?>
             </div>
         </div>

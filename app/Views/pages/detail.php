@@ -82,19 +82,30 @@
                         </svg>
                         Instagram Post
                     </a>
-                    <div class="w-min md:w-4/12 flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        <div class="flex flex-col gap-0">
-                            <h1 class="text-stone-800 text-sm font-bold">
-                                <?= $event[0]['capacity'] ?> slot
-                            </h1>
-                            <p class="text-stone-400 text-xs font-normal">
-                                Capacity
-                            </p>
+                    <?php if ($event[0]['capacity'] > 0) { ?>
+                        <div class="w-min md:w-4/12 flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <div class="flex flex-col gap-0">
+                                <h1 class="text-stone-800 text-sm font-bold">
+                                    <?= $event[0]['capacity'] ?> slot
+                                </h1>
+                                <p class="text-stone-400 text-xs font-normal">
+                                    Capacity
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    <?php } else { ?>
+                        <div class="w-min md:w-4/12 flex items-center gap-4 px-6 py-4 rounded-md bg-red-600 hover:shadow transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <h1 class="text-white text-sm font-bold">
+                                Full Capacity
+                            </h1>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="w-min md:w-6/12 flex items-center gap-4 px-6 py-4 rounded-md bg-white border-2 border-stone-100 hover:shadow">
