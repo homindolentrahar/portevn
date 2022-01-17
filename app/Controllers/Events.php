@@ -103,9 +103,14 @@ class Events extends BaseController
     {
         $model = $this->model->getEvents($id);
         $logged_in = session()->get('logged_in');
+        $is_owner = $model[0]['user_id'] == session()->get('user_id');
         $recommendations = $this->model->getFilteredEvents($model[0]['category_slug']);
 
         if ($logged_in) {
+            if ($is_owner) {
+                session()->setFlashdata('error', "You're not allowed to book your own event");
+                return redirect()->to("events/$id");
+            }
             if ($model[0]['capacity'] == 0) {
                 session()->setFlashdata('error', "Event is not accepting more participant");
                 return redirect()->to("events/$id");
@@ -120,7 +125,7 @@ class Events extends BaseController
             return view('pages/book', $data);
         } else {
             session()->setFlashdata('error', "You're not authorized to see the page");
-            return redirect()->to('/');
+            return redirect()->to("events/$id");
         }
     }
 

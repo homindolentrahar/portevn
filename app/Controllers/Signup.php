@@ -26,8 +26,6 @@ class Signup extends BaseController
 
     public function save()
     {
-        helper(['form']);
-
         $rules = [
             'name' => 'required|min_length[6]',
             'email' => 'required|min_length[6]|valid_email|is_unique[user.user_id]',
@@ -52,9 +50,8 @@ class Signup extends BaseController
                 'isLoggedIn' => $isLoggedIn,
             ];
 
-            session()->setFlashdata('message', $this->validator->listErrors());
+            session()->setFlashdata('error', $this->validator->listErrors());
 
-            // return view('pages/signup', $data);
             return redirect()->to('/signup');
         }
     }

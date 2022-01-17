@@ -57,7 +57,7 @@ class Email extends BaseConfig
      * @var string
      */
     // Set ur gmail address
-    public $SMTPUser = "GMAIL";
+    public $SMTPUser;
 
     /**
      * SMTP Password
@@ -65,7 +65,7 @@ class Email extends BaseConfig
      * @var string
      */
     // Set ur gmail password
-    public $SMTPPass = "GMAIL PASSWORD";
+    public $SMTPPass;
 
     /**
      * SMTP Port

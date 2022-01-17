@@ -20,9 +20,14 @@ class Booking extends BaseController
 
         $event = $model->getEvents($id);
         $logged_in = session()->get('logged_in');
+        $is_owner = $event[0]['user_id'] == session()->get('user_id');
         $recommendations = $model->getFilteredEvents($event[0]['category_slug']);
 
         if ($logged_in) {
+            if ($is_owner) {
+                session()->setFlashdata('error', "You're not allowed to book your own event");
+                return redirect()->to("events/$id");
+            }
             if ($event[0]['capacity'] == 0) {
                 session()->setFlashdata('error', "Event is not accepting more participant");
                 return redirect()->to("events/$id");
@@ -43,15 +48,22 @@ class Booking extends BaseController
 
     public function process()
     {
-        $logged_in = session()->get('logged_in');
+        $eventModel = new EventModel();
         $event_id = $this->request->getVar('event_id');
+        $event = $eventModel->getEvents($event_id);
+
+        $logged_in = session()->get('logged_in');
+        $is_owner = $event[0]['user_id'] == session()->get('user_id');
+        $user_email = $this->request->getVar('email');
         $amount = $this->request->getVar('amount');
 
         if ($logged_in) {
-            // Updating capacity 
-            $eventModel = new EventModel();
-            $event = $eventModel->getEvents($event_id);
+            if ($is_owner) {
+                session()->setFlashdata('error', "You're not allowed to book your own event");
+                return redirect()->to("events/$event_id");
+            }
 
+            // Updating capacity  
             $user_name = session()->get('user_name');
             $event_title = $event[0]['title'];
             $event_date = date('d, M Y', strtotime($event[0]['event_time']));
@@ -95,8 +107,8 @@ class Booking extends BaseController
 </div>
             ";
 
-            $email->setFrom("SENDER'S EMAIL", "Portevn Support Teams");
-            $email->setTo(session()->get('user_email'));
+            $email->setFrom("rahardiyanekowidiatmoko@students.amikom.ac.id", "Portevn Support Teams");
+            $email->setTo($user_email);
             $email->setSubject("Booking Event Receipt");
             $email->setMessage($content);
 
